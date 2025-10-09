@@ -1,76 +1,418 @@
-import productsData from "@/services/mockData/products.json";
-
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Transform database record to frontend format
+const transformProduct = (dbProduct) => {
+  if (!dbProduct) return null;
+  
+  return {
+    Id: dbProduct.Id,
+    name: dbProduct.name_c || '',
+    brand: dbProduct.brand_c || '',
+    price: dbProduct.price_c || 0,
+    originalPrice: dbProduct.original_price_c || 0,
+    images: dbProduct.images_c ? dbProduct.images_c.split(',').map(img => img.trim()) : [],
+    category: dbProduct.category_c || '',
+    specs: {
+      display: dbProduct.display_c || '',
+      processor: dbProduct.processor_c || '',
+      ram: dbProduct.ram_c || '',
+      storage: dbProduct.storage_c || '',
+      camera: dbProduct.camera_c || '',
+      battery: dbProduct.battery_c || '',
+      os: dbProduct.os_c || ''
+    },
+    inStock: dbProduct.in_stock_c || false,
+    rating: dbProduct.rating_c || 0,
+    reviewCount: dbProduct.review_count_c || 0,
+    description: dbProduct.description_c || ''
+  };
+};
 
 const productService = {
   getAll: async () => {
     await delay(300);
-    return [...productsData];
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error fetching products:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   getById: async (id) => {
     await delay(200);
-    const product = productsData.find(p => p.Id === parseInt(id));
-    if (!product) throw new Error("Product not found");
-    return { ...product };
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.getRecordById('product_c', parseInt(id), {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ]
+      });
+      
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+      
+      return transformProduct(response.data);
+    } catch (error) {
+      console.error(`Error fetching product ${id}:`, error?.response?.data?.message || error);
+      throw new Error("Product not found");
+    }
   },
 
   getByCategory: async (category) => {
     await delay(300);
-    return productsData.filter(p => p.category === category).map(p => ({ ...p }));
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        where: [{"FieldName": "category_c", "Operator": "EqualTo", "Values": [category]}]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error fetching products by category:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   search: async (query) => {
     await delay(250);
-    const lowerQuery = query.toLowerCase();
-    return productsData.filter(p => 
-      p.name.toLowerCase().includes(lowerQuery) ||
-      p.brand.toLowerCase().includes(lowerQuery) ||
-      p.category.toLowerCase().includes(lowerQuery)
-    ).map(p => ({ ...p }));
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        whereGroups: [{
+          "operator": "OR",
+          "subGroups": [
+            {
+              "conditions": [
+                {"fieldName": "name_c", "operator": "Contains", "values": [query]}
+              ]
+            },
+            {
+              "conditions": [
+                {"fieldName": "brand_c", "operator": "Contains", "values": [query]}
+              ]
+            },
+            {
+              "conditions": [
+                {"fieldName": "category_c", "operator": "Contains", "values": [query]}
+              ]
+            }
+          ]
+        }]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error searching products:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   filterProducts: async (filters) => {
     await delay(300);
-    let filtered = [...productsData];
-
-    if (filters.brands && filters.brands.length > 0) {
-      filtered = filtered.filter(p => filters.brands.includes(p.brand));
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const whereConditions = [];
+      
+      if (filters.brands && filters.brands.length > 0) {
+        whereConditions.push({
+          "FieldName": "brand_c",
+          "Operator": "ExactMatch",
+          "Values": filters.brands
+        });
+      }
+      
+      if (filters.categories && filters.categories.length > 0) {
+        whereConditions.push({
+          "FieldName": "category_c", 
+          "Operator": "ExactMatch",
+          "Values": filters.categories
+        });
+      }
+      
+      if (filters.priceRange) {
+        whereConditions.push({
+          "FieldName": "price_c",
+          "Operator": "GreaterThanOrEqualTo",
+          "Values": [filters.priceRange.min]
+        });
+        whereConditions.push({
+          "FieldName": "price_c",
+          "Operator": "LessThanOrEqualTo", 
+          "Values": [filters.priceRange.max]
+        });
+      }
+      
+      if (filters.inStockOnly) {
+        whereConditions.push({
+          "FieldName": "in_stock_c",
+          "Operator": "EqualTo",
+          "Values": [true]
+        });
+      }
+      
+      if (filters.ram && filters.ram.length > 0) {
+        whereConditions.push({
+          "FieldName": "ram_c",
+          "Operator": "ExactMatch",
+          "Values": filters.ram
+        });
+      }
+      
+      if (filters.storage && filters.storage.length > 0) {
+        whereConditions.push({
+          "FieldName": "storage_c",
+          "Operator": "ExactMatch", 
+          "Values": filters.storage
+        });
+      }
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        where: whereConditions
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error filtering products:", error?.response?.data?.message || error);
+      return [];
     }
-
-    if (filters.categories && filters.categories.length > 0) {
-      filtered = filtered.filter(p => filters.categories.includes(p.category));
-    }
-
-    if (filters.priceRange) {
-      filtered = filtered.filter(p => 
-        p.price >= filters.priceRange.min && p.price <= filters.priceRange.max
-      );
-    }
-
-    if (filters.inStockOnly) {
-      filtered = filtered.filter(p => p.inStock);
-    }
-
-    if (filters.ram && filters.ram.length > 0) {
-      filtered = filtered.filter(p => filters.ram.includes(p.specs.ram));
-    }
-
-    if (filters.storage && filters.storage.length > 0) {
-      filtered = filtered.filter(p => filters.storage.includes(p.specs.storage));
-    }
-
-    return filtered;
   },
 
   getFeatured: async () => {
     await delay(300);
-    return productsData.filter(p => p.rating >= 4.6).map(p => ({ ...p }));
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        where: [{"FieldName": "rating_c", "Operator": "GreaterThanOrEqualTo", "Values": [4.6]}]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error fetching featured products:", error?.response?.data?.message || error);
+      return [];
+    }
   },
 
   getTrending: async () => {
     await delay(300);
-    return productsData.filter(p => p.reviewCount > 500).map(p => ({ ...p }));
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        where: [{"FieldName": "review_count_c", "Operator": "GreaterThan", "Values": [500]}]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error fetching trending products:", error?.response?.data?.message || error);
+      return [];
+    }
   }
 };
 

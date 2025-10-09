@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import productService from "@/services/api/productService";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
 import { useCart } from "@/hooks/useCart";
 import { useComparison } from "@/hooks/useComparison";
+import ApperIcon from "@/components/ApperIcon";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import productService from "@/services/api/productService";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -19,30 +19,34 @@ const ProductDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
-  const { addToComparison, isInComparison } = useComparison();
+const { addToComparison, isInComparison } = useComparison();
 
-  useEffect(() => {
-    loadProduct();
-  }, [id]);
-
-  const loadProduct = async () => {
+  const loadProduct = useCallback(async () => {
+    if (!id) return;
+    
     try {
       setLoading(true);
       setError("");
       const data = await productService.getById(id);
       setProduct(data);
     } catch (err) {
-      setError(err.message);
+      setError(err?.message || "Failed to load product");
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
-  const handleAddToCart = () => {
+  useEffect(() => {
+    loadProduct();
+  }, [loadProduct]);
+
+const handleAddToCart = () => {
+    if (!product) return;
     addToCart(product, quantity);
   };
 
   const handleBuyNow = () => {
+    if (!product) return;
     addToCart(product, quantity);
     navigate("/cart");
   };
@@ -68,8 +72,8 @@ const ProductDetailPage = () => {
     );
   }
 
-  const savings = product.originalPrice - product.price;
-  const savingsPercent = Math.round((savings / product.originalPrice) * 100);
+const savings = (product?.originalPrice || 0) - (product?.price || 0);
+  const savingsPercent = product?.originalPrice ? Math.round((savings / product.originalPrice) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -84,9 +88,9 @@ const ProductDetailPage = () => {
           </button>
           <h1 className="text-lg font-semibold flex-1">Product Details</h1>
           <button
-            onClick={() => addToComparison(product)}
+onClick={() => product && addToComparison(product)}
             className={`p-2 rounded-lg transition-colors ${
-              isInComparison(product.Id)
+              product && isInComparison(product.Id)
                 ? "bg-white text-primary"
                 : "hover:bg-white/10"
             }`}
@@ -106,14 +110,14 @@ const ProductDetailPage = () => {
               animate={{ opacity: 1 }}
               className="aspect-square bg-gray-50 rounded-2xl overflow-hidden"
             >
-              <img
-                src={product.images[selectedImage]}
-                alt={product.name}
+<img
+                src={product?.images?.[selectedImage] || ""}
+                alt={product?.name || "Product"}
                 className="w-full h-full object-cover"
               />
             </motion.div>
-            <div className="flex gap-3">
-              {product.images.map((image, index) => (
+<div className="flex gap-3">
+              {(product?.images || []).map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
@@ -123,9 +127,9 @@ const ProductDetailPage = () => {
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
-                  <img
+<img
                     src={image}
-                    alt={`${product.name} ${index + 1}`}
+                    alt={`${product?.name || "Product"} ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -135,10 +139,10 @@ const ProductDetailPage = () => {
 
           {/* Details */}
           <div className="space-y-6">
-            <div>
-              <p className="text-sm text-gray-500 mb-2">{product.brand}</p>
+<div>
+              <p className="text-sm text-gray-500 mb-2">{product?.brand || ""}</p>
               <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                {product.name}
+                {product?.name || "Product Name"}
               </h1>
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center gap-2">
@@ -147,25 +151,24 @@ const ProductDetailPage = () => {
                       <ApperIcon
                         key={i}
                         name="Star"
-                        size={16}
-                        className={`${
-                          i < Math.floor(product.rating)
+className={`${
+                          i < Math.floor(product?.rating || 0)
                             ? "text-warning fill-warning"
                             : "text-gray-300"
                         }`}
                       />
                     ))}
-                  </div>
-                  <span className="font-medium">{product.rating}</span>
+                </div>
+                  <span className="font-medium">{product?.rating || 0}</span>
                 </div>
                 <span className="text-gray-500">
-                  ({product.reviewCount} reviews)
+                  ({product?.reviewCount || 0} reviews)
                 </span>
               </div>
 
               {/* Stock Status */}
-              <div className="mb-6">
-                {product.inStock ? (
+<div className="mb-6">
+                {product?.inStock ? (
                   <Badge variant="success" className="text-sm">
                     <ApperIcon name="Check" size={14} className="mr-1" />
                     In Stock
@@ -180,13 +183,13 @@ const ProductDetailPage = () => {
 
               {/* Price */}
               <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl p-6 mb-6">
-                <div className="flex items-end gap-4 mb-2">
+<div className="flex items-end gap-4 mb-2">
                   <div className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    ${product.price}
+                    ${product?.price || 0}
                   </div>
-                  {product.originalPrice > product.price && (
+{(product?.originalPrice || 0) > (product?.price || 0) && (
                     <div className="text-xl text-gray-400 line-through pb-1">
-                      ${product.originalPrice}
+                      ${product?.originalPrice || 0}
                     </div>
                   )}
                 </div>
@@ -223,9 +226,9 @@ const ProductDetailPage = () => {
 
               {/* Actions */}
               <div className="flex gap-3 mb-8">
-                <Button
+<Button
                   onClick={handleBuyNow}
-                  disabled={!product.inStock}
+                  disabled={!product?.inStock}
                   variant="primary"
                   size="lg"
                   className="flex-1"
@@ -233,9 +236,9 @@ const ProductDetailPage = () => {
                   <ApperIcon name="ShoppingBag" size={20} className="mr-2" />
                   Buy Now
                 </Button>
-                <Button
+<Button
                   onClick={handleAddToCart}
-                  disabled={!product.inStock}
+                  disabled={!product?.inStock}
                   variant="secondary"
                   size="lg"
                   className="flex-1"
@@ -251,8 +254,8 @@ const ProductDetailPage = () => {
               <h2 className="text-xl font-bold text-gray-900 mb-3">
                 Description
               </h2>
-              <p className="text-gray-600 leading-relaxed">
-                {product.description}
+<p className="text-gray-600 leading-relaxed">
+                {product?.description || "No description available."}
               </p>
             </div>
 
@@ -261,8 +264,8 @@ const ProductDetailPage = () => {
               <h2 className="text-xl font-bold text-gray-900 mb-3">
                 Specifications
               </h2>
-              <div className="bg-gray-50 rounded-xl p-6 space-y-4">
-                {Object.entries(product.specs).map(([key, value]) => (
+<div className="bg-gray-50 rounded-xl p-6 space-y-4">
+                {Object.entries(product?.specs || {}).map(([key, value]) => (
                   <div
                     key={key}
                     className="flex items-center justify-between py-3 border-b border-gray-200 last:border-0"

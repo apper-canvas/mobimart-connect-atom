@@ -10,7 +10,7 @@
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
       "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80"
     ],
-    "category": "flagship",
+"category": "mobile",
     "specs": {
       "display": "6.8\" Dynamic AMOLED 2X",
       "processor": "Snapdragon 8 Gen 3",
@@ -36,7 +36,7 @@
       "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80",
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
     ],
-    "category": "flagship",
+"category": "mobile",
     "specs": {
       "display": "6.7\" Super Retina XDR",
       "processor": "A17 Pro",
@@ -62,7 +62,7 @@
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
       "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80"
     ],
-    "category": "flagship",
+"category": "mobile",
     "specs": {
       "display": "6.7\" LTPO OLED",
       "processor": "Google Tensor G3",
@@ -88,7 +88,7 @@
       "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
       "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80"
     ],
-    "category": "mid-range",
+"category": "mobile",
     "specs": {
       "display": "6.82\" AMOLED",
       "processor": "Snapdragon 8 Gen 3",
@@ -114,7 +114,7 @@
       "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
     ],
-    "category": "mid-range",
+"category": "mobile",
     "specs": {
       "display": "6.73\" AMOLED",
       "processor": "Snapdragon 8 Gen 3",
@@ -140,7 +140,7 @@
       "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
     ],
-    "category": "mid-range",
+"category": "mobile",
     "specs": {
       "display": "6.4\" Super AMOLED",
       "processor": "Exynos 1380",
@@ -166,7 +166,7 @@
       "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80",
       "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80"
     ],
-    "category": "mid-range",
+"category": "mobile",
     "specs": {
       "display": "6.7\" LTPO OLED",
       "processor": "Snapdragon 8+ Gen 1",
@@ -192,7 +192,7 @@
       "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
     ],
-    "category": "mid-range",
+"category": "mobile",
     "specs": {
       "display": "6.67\" OLED",
       "processor": "Snapdragon 8 Gen 2",
@@ -218,7 +218,7 @@
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
       "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80"
     ],
-    "category": "budget",
+"category": "mobile",
     "specs": {
       "display": "6.78\" AMOLED",
       "processor": "Snapdragon 8 Gen 3",
@@ -244,7 +244,7 @@
       "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
       "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80"
     ],
-    "category": "mid-range",
+"category": "mobile",
     "specs": {
       "display": "6.1\" Super Retina XDR",
       "processor": "A15 Bionic",
@@ -270,7 +270,7 @@
       "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
       "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80"
     ],
-    "category": "budget",
+"category": "mobile",
     "specs": {
       "display": "6.67\" AMOLED",
       "processor": "Snapdragon 8 Gen 2",
@@ -296,7 +296,7 @@
       "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
       "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80"
     ],
-    "category": "flagship",
+"category": "mobile",
     "specs": {
       "display": "6.7\" Foldable AMOLED",
       "processor": "Snapdragon 8 Gen 2",

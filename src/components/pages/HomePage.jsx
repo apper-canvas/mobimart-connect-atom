@@ -20,10 +20,11 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { comparisonItems } = useComparison();
 
-  const categories = [
-    { name: "flagship", icon: "Smartphone", color: "#1e3a8a", count: 0 },
-    { name: "mid-range", icon: "Tablet", color: "#3b82f6", count: 0 },
-    { name: "budget", icon: "DollarSign", color: "#0ea5e9", count: 0 }
+const categories = [
+    { name: "mobile", icon: "Smartphone", color: "#1e3a8a", count: 0 },
+    { name: "flagship", icon: "Star", color: "#3b82f6", count: 0 },
+    { name: "mid-range", icon: "Tablet", color: "#0ea5e9", count: 0 },
+    { name: "budget", icon: "DollarSign", color: "#10b981", count: 0 }
   ];
 
   useEffect(() => {

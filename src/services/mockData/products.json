@@ -1,0 +1,314 @@
+[
+  {
+    "Id": 1,
+    "name": "Galaxy S24 Ultra",
+    "brand": "Samsung",
+    "price": 1199,
+    "originalPrice": 1399,
+    "images": [
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80"
+    ],
+    "category": "flagship",
+    "specs": {
+      "display": "6.8\" Dynamic AMOLED 2X",
+      "processor": "Snapdragon 8 Gen 3",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "200MP + 50MP + 12MP + 10MP",
+      "battery": "5000mAh",
+      "os": "Android 14"
+    },
+    "inStock": true,
+    "rating": 4.8,
+    "reviewCount": 1247,
+    "description": "The ultimate flagship smartphone with revolutionary AI-powered camera system, stunning display, and industry-leading performance."
+  },
+  {
+    "Id": 2,
+    "name": "iPhone 15 Pro Max",
+    "brand": "Apple",
+    "price": 1199,
+    "originalPrice": 1299,
+    "images": [
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+      "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
+    ],
+    "category": "flagship",
+    "specs": {
+      "display": "6.7\" Super Retina XDR",
+      "processor": "A17 Pro",
+      "ram": "8GB",
+      "storage": "256GB",
+      "camera": "48MP + 12MP + 12MP",
+      "battery": "4422mAh",
+      "os": "iOS 17"
+    },
+    "inStock": true,
+    "rating": 4.9,
+    "reviewCount": 2134,
+    "description": "Premium titanium design with the most advanced iPhone camera system, powerful A17 Pro chip, and all-day battery life."
+  },
+  {
+    "Id": 3,
+    "name": "Pixel 8 Pro",
+    "brand": "Google",
+    "price": 999,
+    "originalPrice": 1099,
+    "images": [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80"
+    ],
+    "category": "flagship",
+    "specs": {
+      "display": "6.7\" LTPO OLED",
+      "processor": "Google Tensor G3",
+      "ram": "12GB",
+      "storage": "128GB",
+      "camera": "50MP + 48MP + 48MP",
+      "battery": "5050mAh",
+      "os": "Android 14"
+    },
+    "inStock": true,
+    "rating": 4.7,
+    "reviewCount": 856,
+    "description": "Google's most powerful phone with AI-enhanced photography, Magic Eraser, and pure Android experience."
+  },
+  {
+    "Id": 4,
+    "name": "OnePlus 12",
+    "brand": "OnePlus",
+    "price": 799,
+    "originalPrice": 899,
+    "images": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80"
+    ],
+    "category": "mid-range",
+    "specs": {
+      "display": "6.82\" AMOLED",
+      "processor": "Snapdragon 8 Gen 3",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "50MP + 64MP + 48MP",
+      "battery": "5400mAh",
+      "os": "Android 14"
+    },
+    "inStock": true,
+    "rating": 4.6,
+    "reviewCount": 634,
+    "description": "Flagship performance at mid-range price with 100W SUPERVOOC fast charging and Hasselblad camera tuning."
+  },
+  {
+    "Id": 5,
+    "name": "Xiaomi 14 Pro",
+    "brand": "Xiaomi",
+    "price": 899,
+    "originalPrice": 999,
+    "images": [
+      "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
+    ],
+    "category": "mid-range",
+    "specs": {
+      "display": "6.73\" AMOLED",
+      "processor": "Snapdragon 8 Gen 3",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "50MP + 50MP + 50MP",
+      "battery": "4880mAh",
+      "os": "Android 14"
+    },
+    "inStock": true,
+    "rating": 4.5,
+    "reviewCount": 542,
+    "description": "Leica-powered triple camera system with premium design and lightning-fast 120W HyperCharge."
+  },
+  {
+    "Id": 6,
+    "name": "Galaxy A54 5G",
+    "brand": "Samsung",
+    "price": 449,
+    "originalPrice": 499,
+    "images": [
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
+    ],
+    "category": "mid-range",
+    "specs": {
+      "display": "6.4\" Super AMOLED",
+      "processor": "Exynos 1380",
+      "ram": "8GB",
+      "storage": "128GB",
+      "camera": "50MP + 12MP + 5MP",
+      "battery": "5000mAh",
+      "os": "Android 13"
+    },
+    "inStock": true,
+    "rating": 4.4,
+    "reviewCount": 1123,
+    "description": "Premium Samsung experience at an affordable price with beautiful display and reliable performance."
+  },
+  {
+    "Id": 7,
+    "name": "Nothing Phone 2",
+    "brand": "Nothing",
+    "price": 599,
+    "originalPrice": 699,
+    "images": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80"
+    ],
+    "category": "mid-range",
+    "specs": {
+      "display": "6.7\" LTPO OLED",
+      "processor": "Snapdragon 8+ Gen 1",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "50MP + 50MP",
+      "battery": "4700mAh",
+      "os": "Android 13"
+    },
+    "inStock": true,
+    "rating": 4.3,
+    "reviewCount": 387,
+    "description": "Unique transparent design with Glyph Interface and clean Nothing OS experience."
+  },
+  {
+    "Id": 8,
+    "name": "Motorola Edge 40 Pro",
+    "brand": "Motorola",
+    "price": 699,
+    "originalPrice": 799,
+    "images": [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80"
+    ],
+    "category": "mid-range",
+    "specs": {
+      "display": "6.67\" OLED",
+      "processor": "Snapdragon 8 Gen 2",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "50MP + 50MP + 12MP",
+      "battery": "4600mAh",
+      "os": "Android 13"
+    },
+    "inStock": false,
+    "rating": 4.2,
+    "reviewCount": 267,
+    "description": "Near-stock Android experience with powerful hardware and sleek curved display design."
+  },
+  {
+    "Id": 9,
+    "name": "Realme GT 5 Pro",
+    "brand": "Realme",
+    "price": 549,
+    "originalPrice": 649,
+    "images": [
+      "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80"
+    ],
+    "category": "budget",
+    "specs": {
+      "display": "6.78\" AMOLED",
+      "processor": "Snapdragon 8 Gen 3",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "50MP + 8MP + 50MP",
+      "battery": "5400mAh",
+      "os": "Android 14"
+    },
+    "inStock": true,
+    "rating": 4.5,
+    "reviewCount": 489,
+    "description": "Flagship killer with incredible value, fast charging, and gaming-focused features."
+  },
+  {
+    "Id": 10,
+    "name": "iPhone 14",
+    "brand": "Apple",
+    "price": 699,
+    "originalPrice": 799,
+    "images": [
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
+      "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80"
+    ],
+    "category": "mid-range",
+    "specs": {
+      "display": "6.1\" Super Retina XDR",
+      "processor": "A15 Bionic",
+      "ram": "6GB",
+      "storage": "128GB",
+      "camera": "12MP + 12MP",
+      "battery": "3279mAh",
+      "os": "iOS 17"
+    },
+    "inStock": true,
+    "rating": 4.7,
+    "reviewCount": 3421,
+    "description": "Reliable iPhone experience with excellent camera quality and long-term iOS support."
+  },
+  {
+    "Id": 11,
+    "name": "Poco F6 Pro",
+    "brand": "Poco",
+    "price": 399,
+    "originalPrice": 499,
+    "images": [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80",
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80"
+    ],
+    "category": "budget",
+    "specs": {
+      "display": "6.67\" AMOLED",
+      "processor": "Snapdragon 8 Gen 2",
+      "ram": "12GB",
+      "storage": "256GB",
+      "camera": "64MP + 8MP + 2MP",
+      "battery": "5000mAh",
+      "os": "Android 14"
+    },
+    "inStock": true,
+    "rating": 4.4,
+    "reviewCount": 756,
+    "description": "Exceptional performance per dollar with flagship specs at budget pricing."
+  },
+  {
+    "Id": 12,
+    "name": "Galaxy Z Flip 5",
+    "brand": "Samsung",
+    "price": 999,
+    "originalPrice": 1099,
+    "images": [
+      "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+      "https://images.unsplash.com/photo-1592286927505-b0a6eb8d0cf8?w=800&q=80"
+    ],
+    "category": "flagship",
+    "specs": {
+      "display": "6.7\" Foldable AMOLED",
+      "processor": "Snapdragon 8 Gen 2",
+      "ram": "8GB",
+      "storage": "256GB",
+      "camera": "12MP + 12MP",
+      "battery": "3700mAh",
+      "os": "Android 13"
+    },
+    "inStock": true,
+    "rating": 4.6,
+    "reviewCount": 542,
+    "description": "Stylish foldable design with large cover screen for ultimate portability and style."
+  }
+]

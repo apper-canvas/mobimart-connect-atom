@@ -11,15 +11,10 @@ const CheckoutPage = () => {
   const location = useLocation();
   const { clearCart } = useCart();
   
-  const orderData = location.state || {};
+const orderData = location.state || {};
   const { cartItems = [], subtotal = 0, shipping = 0, discount = 0, total = 0, appliedOffer = null } = orderData;
 
-  // Redirect to cart if no order data
-  if (!cartItems || cartItems.length === 0) {
-    navigate('/cart');
-    return null;
-  }
-
+  // Hooks must be called before any conditional returns
   const [shippingForm, setShippingForm] = useState({
     name: '',
     email: '',
@@ -32,6 +27,11 @@ const CheckoutPage = () => {
 
   const [paymentMethod, setPaymentMethod] = useState('');
 
+  // Redirect to cart if no order data
+  if (!cartItems || cartItems.length === 0) {
+    navigate('/cart');
+    return null;
+  }
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setShippingForm(prev => ({ ...prev, [name]: value }));

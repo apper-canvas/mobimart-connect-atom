@@ -232,9 +232,10 @@ const orderData = location.state || {};
               <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Method</h2>
               
               <div className="space-y-3 mb-6">
-                <button
+<button
+                  type="button"
                   onClick={() => setPaymentMethod('creditCard')}
-                  className={`w-full p-4 border-2 rounded-lg text-left transition-all ${
+                  className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
                     paymentMethod === 'creditCard'
                       ? 'border-primary bg-primary/5'
                       : 'border-gray-200 hover:border-gray-300'
@@ -249,9 +250,10 @@ const orderData = location.state || {};
                   </div>
                 </button>
 
-                <button
+<button
+                  type="button"
                   onClick={() => setPaymentMethod('debitCard')}
-                  className={`w-full p-4 border-2 rounded-lg text-left transition-all ${
+                  className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
                     paymentMethod === 'debitCard'
                       ? 'border-primary bg-primary/5'
                       : 'border-gray-200 hover:border-gray-300'
@@ -266,9 +268,10 @@ const orderData = location.state || {};
                   </div>
                 </button>
 
-                <button
+<button
+                  type="button"
                   onClick={() => setPaymentMethod('upi')}
-                  className={`w-full p-4 border-2 rounded-lg text-left transition-all ${
+                  className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
                     paymentMethod === 'upi'
                       ? 'border-primary bg-primary/5'
                       : 'border-gray-200 hover:border-gray-300'
@@ -283,9 +286,10 @@ const orderData = location.state || {};
                   </div>
                 </button>
 
-                <button
+<button
+                  type="button"
                   onClick={() => setPaymentMethod('cod')}
-                  className={`w-full p-4 border-2 rounded-lg text-left transition-all ${
+                  className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
                     paymentMethod === 'cod'
                       ? 'border-primary bg-primary/5'
                       : 'border-gray-200 hover:border-gray-300'

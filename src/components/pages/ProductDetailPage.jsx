@@ -87,13 +87,14 @@ const savings = (product?.originalPrice || 0) - (product?.price || 0);
             <ApperIcon name="ArrowLeft" size={24} />
           </button>
           <h1 className="text-lg font-semibold flex-1">Product Details</h1>
-          <button
-onClick={() => product && addToComparison(product)}
+<button
+            onClick={() => product && addToComparison(product)}
+            disabled={!product}
             className={`p-2 rounded-lg transition-colors ${
               product && isInComparison(product.Id)
                 ? "bg-white text-primary"
                 : "hover:bg-white/10"
-            }`}
+            } ${!product ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             <ApperIcon name="GitCompare" size={24} />
           </button>

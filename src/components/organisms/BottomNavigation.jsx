@@ -10,10 +10,11 @@ const BottomNavigation = () => {
   const { getCartCount } = useCart();
   const cartCount = getCartCount();
 
-  const navItems = [
+const navItems = [
     { path: "/", icon: "Home", label: "Home" },
     { path: "/categories", icon: "Grid3x3", label: "Categories" },
     { path: "/search", icon: "Search", label: "Search" },
+    { path: "/orders", icon: "Package", label: "Orders" },
     { path: "/cart", icon: "ShoppingCart", label: "Cart", badge: cartCount }
   ];
 

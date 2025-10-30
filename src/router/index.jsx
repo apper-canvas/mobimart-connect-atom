@@ -12,6 +12,7 @@ const CartPage = lazy(() => import('@/components/pages/CartPage'));
 const SearchPage = lazy(() => import('@/components/pages/SearchPage'));
 const ComparisonPage = lazy(() => import('@/components/pages/ComparisonPage'));
 const CheckoutPage = lazy(() => import('@/components/pages/CheckoutPage'));
+const OrdersPage = lazy(() => import('@/components/pages/OrdersPage'));
 const Login = lazy(() => import('@/components/pages/Login'));
 const Signup = lazy(() => import('@/components/pages/Signup'));
 const Callback = lazy(() => import('@/components/pages/Callback'));
@@ -127,9 +128,13 @@ export const router = createBrowserRouter([
             path: "comparison",
             element: <ComparisonPage />
 }),
-          createRoute({
+createRoute({
             path: "checkout",
             element: <CheckoutPage />
+          }),
+          createRoute({
+            path: "orders",
+            element: <OrdersPage />
           })
         ]
       },

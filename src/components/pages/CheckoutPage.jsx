@@ -133,7 +133,7 @@ const orderData = location.state || {};
             </div>
 
             {/* Shipping Address */}
-            <div className="bg-white rounded-lg border border-gray-100 p-6">
+<div className="bg-white rounded-lg border border-gray-100 p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Shipping Address</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
@@ -222,6 +222,23 @@ const orderData = location.state || {};
                     required
                   />
                 </div>
+              </div>
+              <div className="mt-6">
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    if (!shippingForm.name || !shippingForm.email || !shippingForm.phone || 
+                        !shippingForm.address || !shippingForm.city || !shippingForm.state || 
+                        !shippingForm.zipcode) {
+                      toast.error('Please fill in all required fields');
+                      return;
+                    }
+                    toast.success('Shipping address saved successfully');
+                  }}
+                >
+                  <ApperIcon name="Save" size={18} />
+                  Save Address
+                </Button>
               </div>
             </div>
           </div>

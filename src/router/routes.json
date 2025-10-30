@@ -156,5 +156,19 @@
         ]
       }
     }
+},
+  "/checkout": {
+    "allow": {
+      "when": {
+        "conditions": [
+          {
+            "label": "User must be logged in to checkout",
+            "rule": "authenticated"
+          }
+        ]
+      },
+      "redirectOnDeny": "/login",
+      "excludeRedirectQuery": false
+    }
   }
 }

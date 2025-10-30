@@ -14,13 +14,17 @@ const { cartItems, updateQuantity, removeFromCart, clearCart, getCartTotal } = u
   const [discountCode, setDiscountCode] = useState("");
   const [appliedOffer, setAppliedOffer] = useState(null);
   const [discount, setDiscount] = useState(0);
-  const handleCheckout = () => {
-toast.success("Order placed successfully!");
-    clearCart();
-    setAppliedOffer(null);
-    setDiscount(0);
-    setDiscountCode("");
-    navigate("/");
+const handleCheckout = () => {
+    navigate('/checkout', {
+      state: {
+        cartItems,
+        subtotal,
+        shipping: subtotal > 0 ? 10 : 0,
+        discount,
+        total,
+        appliedOffer
+      }
+    });
   };
 
   const handleApplyDiscount = async () => {

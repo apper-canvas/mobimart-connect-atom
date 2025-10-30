@@ -186,8 +186,13 @@ className={`${
               <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl p-6 mb-6">
 <div className="flex items-end gap-4 mb-2">
                   <div className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                    ${product?.price || 0}
+                    ${((product?.price || 0) * quantity).toFixed(2)}
                   </div>
+                </div>
+                <div className="text-sm text-gray-500 mb-4">
+                  ${product?.price || 0} each
+                </div>
+                <div className="flex items-end gap-4 mb-2">
 {(product?.originalPrice || 0) > (product?.price || 0) && (
                     <div className="text-xl text-gray-400 line-through pb-1">
                       ${product?.originalPrice || 0}

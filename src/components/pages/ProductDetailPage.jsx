@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useCart } from "@/hooks/useCart";
 import { useComparison } from "@/hooks/useComparison";
+import productService from "@/services/api/productService";
 import ApperIcon from "@/components/ApperIcon";
-import Error from "@/components/ui/Error";
-import Loading from "@/components/ui/Loading";
 import Badge from "@/components/atoms/Badge";
 import Button from "@/components/atoms/Button";
-import productService from "@/services/api/productService";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
+import ProductCard from "@/components/molecules/ProductCard";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -21,7 +22,7 @@ const ProductDetailPage = () => {
   const { addToCart } = useCart();
 const { addToComparison, isInComparison } = useComparison();
 
-async function loadProduct() {
+const loadProduct = useCallback(async () => {
     if (!id) return;
     
     try {
@@ -34,11 +35,11 @@ async function loadProduct() {
     } finally {
       setLoading(false);
     }
-  }
-
-  useEffect(() => {
-    loadProduct();
   }, [id]);
+
+useEffect(() => {
+    loadProduct();
+  }, [loadProduct]);
 
 const handleAddToCart = () => {
     if (!product) return;

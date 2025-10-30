@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '@/hooks/useCart';
 import { toast } from 'react-toastify';
@@ -7,12 +7,116 @@ import Button from '@/components/atoms/Button';
 import Input from '@/components/atoms/Input';
 
 const CheckoutPage = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
   const location = useLocation();
   const { clearCart } = useCart();
   
 const orderData = location.state || {};
   const { cartItems = [], subtotal = 0, shipping = 0, discount = 0, total = 0, appliedOffer = null } = orderData;
+
+  // Credit card form state
+  const [cardDetails, setCardDetails] = useState({
+    cardNumber: '',
+    cardholderName: '',
+    expiryDate: '',
+    cvv: ''
+  });
+
+  const [cardErrors, setCardErrors] = useState({
+    cardNumber: '',
+    cardholderName: '',
+    expiryDate: '',
+    cvv: ''
+  });
+
+  // Format card number with spaces
+  const formatCardNumber = (value) => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const matches = v.match(/\d{4,16}/g);
+    const match = (matches && matches[0]) || '';
+    const parts = [];
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+    return parts.length ? parts.join(' ') : value;
+  };
+
+  // Format expiry date as MM/YY
+  const formatExpiryDate = (value) => {
+    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    if (v.length >= 2) {
+      return v.substring(0, 2) + (v.length > 2 ? '/' + v.substring(2, 4) : '');
+    }
+    return v;
+  };
+
+  // Validate card number using Luhn algorithm
+  const validateCardNumber = (number) => {
+    const digits = number.replace(/\s+/g, '');
+    if (digits.length < 13 || digits.length > 19) return false;
+    
+    let sum = 0;
+    let isEven = false;
+    for (let i = digits.length - 1; i >= 0; i--) {
+      let digit = parseInt(digits[i], 10);
+      if (isEven) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      sum += digit;
+      isEven = !isEven;
+    }
+    return sum % 10 === 0;
+  };
+
+  // Validate expiry date
+  const validateExpiryDate = (date) => {
+    if (!date || date.length !== 5) return false;
+    const [month, year] = date.split('/');
+    const monthNum = parseInt(month, 10);
+    const yearNum = parseInt('20' + year, 10);
+    
+    if (monthNum < 1 || monthNum > 12) return false;
+    
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+    
+    if (yearNum < currentYear || (yearNum === currentYear && monthNum < currentMonth)) {
+      return false;
+    }
+    return true;
+  };
+
+  // Handle card detail changes
+  const handleCardChange = (field, value) => {
+    let formattedValue = value;
+    let error = '';
+
+    if (field === 'cardNumber') {
+      formattedValue = formatCardNumber(value);
+      if (formattedValue.replace(/\s+/g, '').length > 0 && !validateCardNumber(formattedValue)) {
+        error = 'Invalid card number';
+      }
+    } else if (field === 'expiryDate') {
+      formattedValue = formatExpiryDate(value);
+      if (formattedValue.length === 5 && !validateExpiryDate(formattedValue)) {
+        error = 'Invalid or expired date';
+      }
+    } else if (field === 'cvv') {
+      formattedValue = value.replace(/[^0-9]/gi, '').substring(0, 4);
+      if (formattedValue.length > 0 && formattedValue.length < 3) {
+        error = 'CVV must be 3-4 digits';
+      }
+    } else if (field === 'cardholderName') {
+      if (value.length > 0 && !/^[a-zA-Z\s]*$/.test(value)) {
+        error = 'Only letters and spaces allowed';
+      }
+    }
+
+    setCardDetails(prev => ({ ...prev, [field]: formattedValue }));
+    setCardErrors(prev => ({ ...prev, [field]: error }));
+  };
 
   // Hooks must be called before any conditional returns
   const [shippingForm, setShippingForm] = useState({
@@ -249,7 +353,7 @@ const orderData = location.state || {};
               <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Method</h2>
               
 <div className="space-y-3 mb-6">
-                <button
+<button
                   type="button"
                   onClick={() => setPaymentMethod('creditCard')}
                   className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
@@ -266,6 +370,90 @@ const orderData = location.state || {};
                     </div>
                   </div>
                 </button>
+
+                {/* Credit Card Details Form */}
+                {paymentMethod === 'creditCard' && (
+                  <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 transition-all">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-4">Card Details</h3>
+                    <div className="space-y-4">
+                      {/* Card Number */}
+                      <div>
+                        <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 mb-1">
+                          Card Number
+                        </label>
+                        <Input
+                          id="cardNumber"
+                          type="text"
+                          value={cardDetails.cardNumber}
+                          onChange={(e) => handleCardChange('cardNumber', e.target.value)}
+                          placeholder="1234 5678 9012 3456"
+                          maxLength={19}
+                          className={`w-full ${cardErrors.cardNumber ? 'border-red-500' : ''}`}
+                        />
+                        {cardErrors.cardNumber && (
+                          <p className="text-xs text-red-500 mt-1">{cardErrors.cardNumber}</p>
+                        )}
+                      </div>
+
+                      {/* Cardholder Name */}
+                      <div>
+                        <label htmlFor="cardholderName" className="block text-sm font-medium text-gray-700 mb-1">
+                          Cardholder Name
+                        </label>
+                        <Input
+                          id="cardholderName"
+                          type="text"
+                          value={cardDetails.cardholderName}
+                          onChange={(e) => handleCardChange('cardholderName', e.target.value)}
+                          placeholder="John Doe"
+                          className={`w-full ${cardErrors.cardholderName ? 'border-red-500' : ''}`}
+                        />
+                        {cardErrors.cardholderName && (
+                          <p className="text-xs text-red-500 mt-1">{cardErrors.cardholderName}</p>
+                        )}
+                      </div>
+
+                      {/* Expiry Date and CVV */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700 mb-1">
+                            Expiry Date
+                          </label>
+                          <Input
+                            id="expiryDate"
+                            type="text"
+                            value={cardDetails.expiryDate}
+                            onChange={(e) => handleCardChange('expiryDate', e.target.value)}
+                            placeholder="MM/YY"
+                            maxLength={5}
+                            className={`w-full ${cardErrors.expiryDate ? 'border-red-500' : ''}`}
+                          />
+                          {cardErrors.expiryDate && (
+                            <p className="text-xs text-red-500 mt-1">{cardErrors.expiryDate}</p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label htmlFor="cvv" className="block text-sm font-medium text-gray-700 mb-1">
+                            CVV
+                          </label>
+                          <Input
+                            id="cvv"
+                            type="password"
+                            value={cardDetails.cvv}
+                            onChange={(e) => handleCardChange('cvv', e.target.value)}
+                            placeholder="123"
+                            maxLength={4}
+                            className={`w-full ${cardErrors.cvv ? 'border-red-500' : ''}`}
+                          />
+                          {cardErrors.cvv && (
+                            <p className="text-xs text-red-500 mt-1">{cardErrors.cvv}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <button
                   type="button"

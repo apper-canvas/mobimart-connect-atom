@@ -13,7 +13,8 @@ import SearchBar from "@/components/molecules/SearchBar";
 
 const HomePage = () => {
 const [featured, setFeatured] = useState([]);
-  const [trending, setTrending] = useState([]);
+const [trending, setTrending] = useState([]);
+  const [onePlusProducts, setOnePlusProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -41,13 +42,15 @@ const categories = [
     try {
       setLoading(true);
       setError("");
-      const [featuredData, trendingData, allData] = await Promise.all([
+const [featuredData, trendingData, onePlusData, allData] = await Promise.all([
         productService.getFeatured(),
         productService.getTrending(),
+        productService.getByBrand('OnePlus'),
         productService.getAll()
       ]);
-      setFeatured(featuredData.slice(0, 4));
-      setTrending(trendingData.slice(0, 4));
+      setFeatured(featuredData.slice(0, 6));
+      setTrending(trendingData.slice(0, 8));
+      setOnePlusProducts(onePlusData.slice(0, 8));
       setAllProducts(allData);
     } catch (err) {
       setError(err.message);
@@ -136,8 +139,26 @@ const categories = [
             </Button>
           </div>
           <ProductGrid products={trending} />
-        </section>
+</section>
 
+        {/* OnePlus Collection */}
+        <section className="bg-gradient-to-br from-primary via-secondary to-accent text-white rounded-2xl p-8 mb-12">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">OnePlus Collection</h2>
+              <p className="text-white/80">Discover the latest OnePlus devices</p>
+            </div>
+            <Button
+              onClick={() => navigate('/categories?brand=OnePlus')}
+              variant="secondary"
+              className="bg-white text-primary hover:bg-white/90"
+            >
+              View All
+              <ApperIcon name="ArrowRight" size={16} className="ml-2" />
+            </Button>
+          </div>
+          <ProductGrid products={onePlusProducts} />
+        </section>
         {/* Promo Banner */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}

@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { AuthContext } from "../../App";
+import { useAuth } from "@/layouts/Root";
 import ApperIcon from "@/components/ApperIcon";
 import BottomNavigation from "@/components/organisms/BottomNavigation";
 import Button from "@/components/atoms/Button";
 
 const Layout = () => {
-  const { logout } = useContext(AuthContext);
+const { logout } = useAuth();
   const { user, isAuthenticated } = useSelector((state) => state.user);
   
   return (

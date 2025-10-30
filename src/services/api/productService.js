@@ -163,7 +163,7 @@ getByCategory: async (category) => {
     }
   },
 
-  getByCategoryType: async (categoryType) => {
+getByCategoryType: async (categoryType) => {
     await delay(300);
     try {
       const { ApperClient } = window.ApperSDK;
@@ -205,6 +205,52 @@ getByCategory: async (category) => {
       return response.data.map(transformProduct);
     } catch (error) {
       console.error("Error fetching products by category type:", error?.response?.data?.message || error);
+      return [];
+    }
+  },
+
+  getByBrand: async (brand) => {
+    await delay(300);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        where: [{"FieldName": "brand_c", "Operator": "EqualTo", "Values": [brand]}]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error fetching products by brand:", error?.response?.data?.message || error);
       return [];
     }
   },

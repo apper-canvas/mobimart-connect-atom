@@ -1,9 +1,10 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState, createContext, useContext } from "react";
-import { setUser, clearUser, setInitialized } from "@/store/userSlice";
-import { getRouteConfig, verifyRouteAccess } from "@/router/route.utils";
+import { useDispatch, useSelector } from "react-redux";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { getApperClient } from "@/services/apperClient";
+import Error from "@/components/ui/Error";
+import { clearUser, setInitialized, setUser } from "@/store/userSlice";
+import { getRouteConfig, verifyRouteAccess } from "@/router/route.utils";
 
 // Auth context for logout functionality
 const AuthContext = createContext(null);
@@ -62,6 +63,22 @@ export default function Root() {
     navigate(redirectUrl, { replace: true });
   }, [isInitialized, user, location.pathname, location.search, navigate]);
 
+const handleAuthSuccess = (user) => {
+    if (user) {
+      dispatch(setUser(user));
+      handleNavigation();
+    } else {
+      dispatch(clearUser());
+    }
+    handleAuthComplete();
+  };
+
+  const handleAuthError = (error) => {
+    console.error("Auth error:", error);
+    dispatch(clearUser());
+    handleAuthComplete();
+  };
+
   const initializeAuth = async () => {
     try {
       // Wait for SDK to load and get client
@@ -89,22 +106,6 @@ export default function Root() {
       dispatch(clearUser());
       handleAuthComplete();
     }
-  };
-
-  const handleAuthSuccess = (user) => {
-    if (user) {
-      dispatch(setUser(user));
-      handleNavigation();
-    } else {
-      dispatch(clearUser());
-    }
-    handleAuthComplete();
-  };
-
-  const handleAuthError = (error) => {
-    console.error("Auth error:", error);
-    dispatch(clearUser());
-    handleAuthComplete();
   };
 
   const handleAuthComplete = () => {

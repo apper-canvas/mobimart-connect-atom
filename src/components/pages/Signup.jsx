@@ -1,20 +1,25 @@
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useAuth } from '@/layouts/Root';
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useAuth } from "@/layouts/Root";
 
 function Signup() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { isInitialized } = useAuth();
-  
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (isInitialized) {
-      // Show signup UI in this component
       const { ApperUI } = window.ApperSDK;
-      ApperUI.showSignup("#authentication");
+      if (!user) {
+        ApperUI.showSignup("#authentication");
+      } else {
+        const searchParams = new URLSearchParams(window.location.search);
+        const redirectPath = searchParams.get('redirect');
+        navigate(redirectPath ? redirectPath : "/");
+      }
     }
-  }, [isInitialized]);
+  }, [isInitialized, user, navigate]);
   
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">

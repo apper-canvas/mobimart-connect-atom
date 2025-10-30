@@ -1,18 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Badge from "@/components/atoms/Badge";
 import { useCart } from "@/hooks/useCart";
 import { useComparison } from "@/hooks/useComparison";
+import ApperIcon from "@/components/ApperIcon";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const { addToComparison, isInComparison } = useComparison();
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  const inComparison = isInComparison(product?.id);
   const handleAddToCart = (e) => {
     e.stopPropagation();
     addToCart(product);
@@ -55,12 +55,12 @@ const ProductCard = ({ product }) => {
             </Badge>
           )}
         </div>
-        <motion.button
+<motion.button
           initial={{ opacity: 0, x: 20 }}
           whileHover={{ opacity: 1, x: 0 }}
           onClick={handleCompare}
           className={`absolute top-3 right-3 p-2 rounded-full ${
-            isInComparison(product.Id) 
+            inComparison 
               ? 'bg-accent text-white' 
               : 'bg-white/90 text-gray-700 hover:bg-white'
           } shadow-lg transition-colors`}

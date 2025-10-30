@@ -21,7 +21,7 @@ const ProductDetailPage = () => {
   const { addToCart } = useCart();
 const { addToComparison, isInComparison } = useComparison();
 
-  const loadProduct = useCallback(async () => {
+async function loadProduct() {
     if (!id) return;
     
     try {
@@ -34,11 +34,11 @@ const { addToComparison, isInComparison } = useComparison();
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }
 
   useEffect(() => {
     loadProduct();
-  }, [loadProduct]);
+  }, [id]);
 
 const handleAddToCart = () => {
     if (!product) return;

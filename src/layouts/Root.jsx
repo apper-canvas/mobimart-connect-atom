@@ -35,7 +35,8 @@ export default function Root() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [authInitialized, setAuthInitialized] = useState(false);
+const [authInitialized, setAuthInitialized] = useState(false);
+  const [sdkLoadAttempts, setSdkLoadAttempts] = useState(0);
 
   useEffect(() => {
     initializeAuth();
@@ -79,13 +80,41 @@ const handleAuthSuccess = (user) => {
     handleAuthComplete();
   };
 
-  const initializeAuth = async () => {
+const initializeAuth = async () => {
     try {
-      // Wait for SDK to load and get client
-      const apperClient = await getApperClient();
+      // Wait for SDK to load with timeout
+      const maxAttempts = 100; // 10 seconds total (100ms * 100)
+      let attempts = 0;
+      
+      // Poll for SDK availability
+      const waitForSDK = () => {
+        return new Promise((resolve, reject) => {
+          const checkSDK = () => {
+            attempts++;
+            setSdkLoadAttempts(attempts);
+            
+            if (window.ApperSDK) {
+              console.log('ApperSDK loaded successfully after', attempts * 100, 'ms');
+              resolve(true);
+            } else if (attempts >= maxAttempts) {
+              console.error('ApperSDK failed to load after 10 seconds');
+              reject(new Error('SDK load timeout'));
+            } else {
+              setTimeout(checkSDK, 100);
+            }
+          };
+          checkSDK();
+        });
+      };
+
+      // Wait for SDK to be available
+      await waitForSDK();
+
+      // Now get the client
+      const apperClient = getApperClient();
 
       if (!apperClient || !window.ApperSDK) {
-        console.error('Failed to initialize ApperSDK or ApperClient');
+        console.error('Failed to initialize ApperClient after SDK loaded');
         dispatch(clearUser());
         handleAuthComplete();
         return;

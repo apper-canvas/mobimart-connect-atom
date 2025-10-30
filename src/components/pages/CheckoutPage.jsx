@@ -248,8 +248,8 @@ const orderData = location.state || {};
             <div className="bg-white rounded-lg border border-gray-100 p-6 sticky top-4">
               <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Method</h2>
               
-              <div className="space-y-3 mb-6">
-<button
+<div className="space-y-3 mb-6">
+                <button
                   type="button"
                   onClick={() => setPaymentMethod('creditCard')}
                   className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
@@ -267,7 +267,7 @@ const orderData = location.state || {};
                   </div>
                 </button>
 
-<button
+                <button
                   type="button"
                   onClick={() => setPaymentMethod('debitCard')}
                   className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
@@ -285,7 +285,7 @@ const orderData = location.state || {};
                   </div>
                 </button>
 
-<button
+                <button
                   type="button"
                   onClick={() => setPaymentMethod('upi')}
                   className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${
@@ -303,7 +303,7 @@ const orderData = location.state || {};
                   </div>
                 </button>
 
-<button
+                <button
                   type="button"
                   onClick={() => setPaymentMethod('cod')}
                   className={`w-full p-4 border-2 rounded-lg text-left transition-all cursor-pointer ${

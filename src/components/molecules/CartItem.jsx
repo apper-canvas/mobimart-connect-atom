@@ -14,9 +14,13 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }) => {
       className="bg-white rounded-lg p-4 border border-gray-100"
     >
       <div className="flex gap-4">
-        <div className="w-24 h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+<div className="w-24 h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
           <img
-            src={product.images[0]}
+            src={
+              product.images 
+                ? (Array.isArray(product.images) ? product.images[0] : product.images)
+                : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e7eb" width="100" height="100"/%3E%3Cpath fill="%239ca3af" d="M30 35h40v30H30z"/%3E%3Ccircle fill="%239ca3af" cx="40" cy="45" r="5"/%3E%3Cpath fill="%239ca3af" d="M35 60l10-10 5 5 15-15 5 5v15H35z"/%3E%3C/svg%3E'
+            }
             alt={product.name}
             className="w-full h-full object-cover"
           />

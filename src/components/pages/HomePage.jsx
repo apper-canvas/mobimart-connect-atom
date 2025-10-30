@@ -49,7 +49,7 @@ const [featuredData, trendingData, onePlusData, allData] = await Promise.all([
         productService.getAll()
       ]);
       setFeatured(featuredData.slice(0, 6));
-      setTrending(trendingData.slice(0, 8));
+setTrending(trendingData.slice(0, 8));
       setOnePlusProducts(onePlusData.slice(0, 8));
       setAllProducts(allData);
     } catch (err) {

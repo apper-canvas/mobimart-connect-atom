@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useComparison } from "@/hooks/useComparison";
 import productService from "@/services/api/productService";
-import ProductGrid from "@/components/organisms/ProductGrid";
-import CategoryCard from "@/components/molecules/CategoryCard";
-import SearchBar from "@/components/molecules/SearchBar";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
-import { useComparison } from "@/hooks/useComparison";
+import ProductGrid from "@/components/organisms/ProductGrid";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
+import CategoryCard from "@/components/molecules/CategoryCard";
+import SearchBar from "@/components/molecules/SearchBar";
 
 const HomePage = () => {
-  const [featured, setFeatured] = useState([]);
+const [featured, setFeatured] = useState([]);
   const [trending, setTrending] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,11 +21,17 @@ const HomePage = () => {
   const { comparisonItems } = useComparison();
 
 const categories = [
-    { name: "mobile", icon: "Smartphone", color: "#1e3a8a", count: 0 },
     { name: "flagship", icon: "Star", color: "#3b82f6", count: 0 },
     { name: "mid-range", icon: "Tablet", color: "#0ea5e9", count: 0 },
     { name: "budget", icon: "DollarSign", color: "#10b981", count: 0 }
   ];
+
+  const getCategoryCounts = () => {
+    return categories.map(category => ({
+      ...category,
+      count: allProducts.filter(p => p.category_type_c === category.name).length
+    }));
+  };
 
   useEffect(() => {
     loadData();
@@ -49,14 +55,6 @@ const categories = [
       setLoading(false);
     }
   };
-
-  const getCategoryCounts = () => {
-    return categories.map(cat => ({
-      ...cat,
-      count: allProducts.filter(p => p.category === cat.name).length
-    }));
-  };
-
   if (loading) {
     return (
       <div className="p-4 max-w-screen-xl mx-auto">
@@ -92,9 +90,9 @@ const categories = [
       </div>
 
       <div className="max-w-screen-xl mx-auto px-4 py-6 space-y-8">
-        {/* Categories */}
+{/* Categories */}
         <section>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Shop by Category</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Shop by Category Type</h2>
           <div className="grid grid-cols-3 gap-3">
             {getCategoryCounts().map((category) => (
               <CategoryCard
@@ -108,7 +106,7 @@ const categories = [
           </div>
         </section>
 
-        {/* Featured Products */}
+{/* Featured Products */}
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold text-gray-900">Featured Phones</h2>

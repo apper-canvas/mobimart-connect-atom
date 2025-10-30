@@ -23,13 +23,16 @@ const CategoriesPage = () => {
     loadProducts();
   }, []);
 
-  const loadProducts = async () => {
+const loadProducts = async () => {
     try {
       setLoading(true);
       setError("");
       const categoryParam = searchParams.get("category");
+      const categoryTypeParam = searchParams.get("category_type");
       let data;
-      if (categoryParam) {
+      if (categoryTypeParam) {
+        data = await productService.getByCategoryType(categoryTypeParam);
+      } else if (categoryParam) {
         data = await productService.getByCategory(categoryParam);
       } else {
         data = await productService.getAll();

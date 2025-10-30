@@ -47,6 +47,7 @@ const productService = {
           {"field": {"Name": "original_price_c"}},
           {"field": {"Name": "images_c"}},
           {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
           {"field": {"Name": "display_c"}},
           {"field": {"Name": "processor_c"}},
           {"field": {"Name": "ram_c"}},
@@ -116,7 +117,7 @@ const productService = {
     }
   },
 
-  getByCategory: async (category) => {
+getByCategory: async (category) => {
     await delay(300);
     try {
       const { ApperClient } = window.ApperSDK;
@@ -134,6 +135,7 @@ const productService = {
           {"field": {"Name": "original_price_c"}},
           {"field": {"Name": "images_c"}},
           {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
           {"field": {"Name": "display_c"}},
           {"field": {"Name": "processor_c"}},
           {"field": {"Name": "ram_c"}},
@@ -157,6 +159,52 @@ const productService = {
       return response.data.map(transformProduct);
     } catch (error) {
       console.error("Error fetching products by category:", error?.response?.data?.message || error);
+      return [];
+    }
+  },
+
+  getByCategoryType: async (categoryType) => {
+    await delay(300);
+    try {
+      const { ApperClient } = window.ApperSDK;
+      const apperClient = new ApperClient({
+        apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+        apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+      });
+      
+      const response = await apperClient.fetchRecords('product_c', {
+        fields: [
+          {"field": {"Name": "Id"}},
+          {"field": {"Name": "name_c"}},
+          {"field": {"Name": "brand_c"}},
+          {"field": {"Name": "price_c"}},
+          {"field": {"Name": "original_price_c"}},
+          {"field": {"Name": "images_c"}},
+          {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
+          {"field": {"Name": "display_c"}},
+          {"field": {"Name": "processor_c"}},
+          {"field": {"Name": "ram_c"}},
+          {"field": {"Name": "storage_c"}},
+          {"field": {"Name": "camera_c"}},
+          {"field": {"Name": "battery_c"}},
+          {"field": {"Name": "os_c"}},
+          {"field": {"Name": "in_stock_c"}},
+          {"field": {"Name": "rating_c"}},
+          {"field": {"Name": "review_count_c"}},
+          {"field": {"Name": "description_c"}}
+        ],
+        where: [{"FieldName": "category_type_c", "Operator": "EqualTo", "Values": [categoryType]}]
+      });
+      
+      if (!response.success) {
+        console.error(response.message);
+        return [];
+      }
+      
+      return response.data.map(transformProduct);
+    } catch (error) {
+      console.error("Error fetching products by category type:", error?.response?.data?.message || error);
       return [];
     }
   },
@@ -225,7 +273,7 @@ const productService = {
     }
   },
 
-  filterProducts: async (filters) => {
+filterProducts: async (filters) => {
     await delay(300);
     try {
       const { ApperClient } = window.ApperSDK;
@@ -298,6 +346,7 @@ const productService = {
           {"field": {"Name": "original_price_c"}},
           {"field": {"Name": "images_c"}},
           {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
           {"field": {"Name": "display_c"}},
           {"field": {"Name": "processor_c"}},
           {"field": {"Name": "ram_c"}},
@@ -325,7 +374,7 @@ const productService = {
     }
   },
 
-  getFeatured: async () => {
+getFeatured: async () => {
     await delay(300);
     try {
       const { ApperClient } = window.ApperSDK;
@@ -343,6 +392,7 @@ const productService = {
           {"field": {"Name": "original_price_c"}},
           {"field": {"Name": "images_c"}},
           {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
           {"field": {"Name": "display_c"}},
           {"field": {"Name": "processor_c"}},
           {"field": {"Name": "ram_c"}},
@@ -370,7 +420,7 @@ const productService = {
     }
   },
 
-  getTrending: async () => {
+getTrending: async () => {
     await delay(300);
     try {
       const { ApperClient } = window.ApperSDK;
@@ -388,6 +438,7 @@ const productService = {
           {"field": {"Name": "original_price_c"}},
           {"field": {"Name": "images_c"}},
           {"field": {"Name": "category_c"}},
+          {"field": {"Name": "category_type_c"}},
           {"field": {"Name": "display_c"}},
           {"field": {"Name": "processor_c"}},
           {"field": {"Name": "ram_c"}},
